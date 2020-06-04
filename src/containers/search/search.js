@@ -33,6 +33,7 @@ import {
 import {setPageLoading} from '../../actions/loadingActions';
 import TotalCount from './TotalCount';
 import {SearchBarComponent} from '../layout/searchBar';
+import DownloadSearchResultsButton from './DownloadSearchResultsButton';
 
 const BASE_SEARCH_URL = '/api/search';
 
@@ -134,6 +135,7 @@ class SearchComponent extends Component {
                   <div className='d-flex justify-content-between align-items-baseline'>
                     <span><TotalCount/> results {queryParams.q &&
                     <span>for <b>{queryParams.q}</b></span>}</span>
+                    <span><DownloadSearchResultsButton queryParams={queryParams} /></span>
                     <SearchControls queryParams={queryParams}/>
                   </div>
                   <SearchBreadcrumbs queryParams={queryParams}/>
