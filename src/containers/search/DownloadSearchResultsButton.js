@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 import style from './style.scss';
 import {selectPageLoading} from '../../selectors/loadingSelector';
 import {Link} from 'react-router-dom';
+import 'jsdom-global/register';
 
 const DownloadSearchResultsButton = () => {
-  let path = window.location.href.split('?')[1];
+  let path = window ? window.location.href.split('?')[1]: '';
   return (
     <div>
       Download results&nbsp;<Link target='_blank' to={`search/download?${path}`} ><i className={`${style.downloadSearchIcon} fa fa-cloud-download fa-2x`}/></Link>
