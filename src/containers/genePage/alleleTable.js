@@ -139,9 +139,15 @@ const AlleleTable = ({alleles, dispatchFetchAlleles, gene, geneId, geneSymbol, g
           <ExternalLink href='#'>&nbsp;</ExternalLink> :
           '';
       },
-      // style: {
-      //   fontFamily: 'FontAwesome'
-      // },
+      headerStyle: headerStyleAssociations,
+    },
+    {
+      text: 'Has X2 association',
+      formatter: (cell, row, rowIndex) => {
+        return pseudoRandom(rowIndex) > 0.5 ?
+          <a href='#'>&#x2611;</a> :
+          '';
+      },
       headerStyle: headerStyleAssociations,
     },
     {
