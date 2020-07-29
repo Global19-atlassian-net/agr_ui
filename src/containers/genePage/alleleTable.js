@@ -13,6 +13,23 @@ import DiseaseLink from '../../components/disease/DiseaseLink';
 import {VariantJBrowseLink} from '../../components/variant';
 import VariantsSequenceViewer from './VariantsSequenceViewer';
 
+const pseudoRandom = (function() {
+  const sequence = [];
+  for (let i = 0; i < 100; i++) {
+    sequence.push(Math.random());
+  }
+  return function(seed) {
+    return sequence[Math.round(seed)];
+  };
+})();
+
+const headerStyleAssociations =  {
+  width: 50,
+  transform: 'translate(-90px, 30px) rotate(-45deg)',
+  whiteSpace: 'nowrap',
+  height: 300,
+};
+
 
 const AlleleTable = ({alleles, dispatchFetchAlleles, gene, geneId, geneSymbol, geneLocation = {}, species, geneDataProvider}) => {
 
@@ -43,6 +60,7 @@ const AlleleTable = ({alleles, dispatchFetchAlleles, gene, geneId, geneSymbol, g
     },
     {
       dataField: 'disease',
+      hidden: false,
       text: 'Associated Human Disease',
       helpPopupProps: {
         id: 'gene-page--alleles-table--disease-help',
@@ -58,6 +76,7 @@ const AlleleTable = ({alleles, dispatchFetchAlleles, gene, geneId, geneSymbol, g
     },
     {
       dataField: 'phenotypes',
+      hidden: false,
       text: 'Associated phenotypes',
       helpPopupProps: {
         id: 'gene-page--alleles-table--phenotype-help',
@@ -73,6 +92,57 @@ const AlleleTable = ({alleles, dispatchFetchAlleles, gene, geneId, geneSymbol, g
       headerStyle: {width: '200px'},
       filterable: true,
       filterName: 'phenotype',
+    },
+    {
+      text: 'Has phenotype association',
+      formatter: (cell, row, rowIndex) => {
+        if (pseudoRandom(rowIndex) > 0.5) {
+          return <a href='#'>Yes</a>;
+        } else {
+          return '-';
+        }
+
+      },
+      headerStyle: headerStyleAssociations,
+    },
+    {
+      text: 'Has phenotype not observed association',
+      formatter: (cell, row, rowIndex) => {
+        const c = pseudoRandom(rowIndex) * 10 - 5;
+        return c > 0 ? <a href='#'>{Math.round(c)}</a> : '-';
+
+      },
+      headerStyle: headerStyleAssociations,
+    },
+    {
+      text: 'Has disease association',
+      headerStyle: headerStyleAssociations,
+      style: (cell, row, rowIndex) => (
+        (pseudoRandom(rowIndex) > 0.5) ? {backgroundColor: '#dff0d8'} : {
+          backgroundColor: '#fff'
+        }
+      ),
+    },
+    {
+      text: 'Has disease not observed association',
+      formatter: (cell, row, rowIndex) => {
+        return pseudoRandom(rowIndex) > 0.5 ?
+          <a href='#'>[+]</a> :
+          '';
+      },
+      headerStyle: headerStyleAssociations,
+    },
+    {
+      text: 'Has X association',
+      formatter: (cell, row, rowIndex) => {
+        return pseudoRandom(rowIndex) > 0.5 ?
+          <ExternalLink href='#'>&nbsp;</ExternalLink> :
+          '';
+      },
+      // style: {
+      //   fontFamily: 'FontAwesome'
+      // },
+      headerStyle: headerStyleAssociations,
     },
     {
       dataField: 'variants',
@@ -125,12 +195,13 @@ const AlleleTable = ({alleles, dispatchFetchAlleles, gene, geneId, geneSymbol, g
       attrs: {
         colSpan: 3
       },
-      headerStyle: {width: variantNameColWidth},
+      headerStyle: {width: variantNameColWidth + variantTypeColWidth + variantConsequenceColWidth},
       //style: {width: variantNameColWidth + variantTypeColWidth + variantConsequenceColWidth + 50},
       filterable: false,
     },
     {
       dataField: 'variantType',
+      hidden: true,
       text: 'Variant type',
       headerStyle: {width: variantTypeColWidth},
       // filterable: ['delins', 'point mutation', 'insertion', 'deletion', 'MNV'],
@@ -140,6 +211,7 @@ const AlleleTable = ({alleles, dispatchFetchAlleles, gene, geneId, geneSymbol, g
     },
     {
       dataField: 'variantConsequence',
+      hidden: true,
       text: 'Molecular consequence',
       helpPopupProps: {
         id: 'gene-page--alleles-table--molecular-consequence-help',
