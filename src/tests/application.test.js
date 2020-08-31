@@ -1,4 +1,4 @@
-import assert from 'assert';
+import { expect } from 'chai';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { MemoryRouter } from 'react-router-dom';
@@ -10,6 +10,6 @@ describe('ReactApp', () => {
     let htmlString = renderToString(
       <ReactApp router={MemoryRouter} />
     );
-    assert.equal(typeof htmlString, 'string');
+    expect(htmlString).to.be.a('string');
   });
 });

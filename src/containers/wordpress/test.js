@@ -1,4 +1,4 @@
-import assert from 'assert';
+import { expect } from 'chai';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
@@ -18,6 +18,6 @@ describe('Wordpress', () => {
         </Router>
       </Provider>
     );
-    assert.equal(typeof htmlString, 'string');
+    expect(htmlString).to.be.a('string');
   });
 });

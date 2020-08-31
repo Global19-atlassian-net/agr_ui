@@ -1,4 +1,4 @@
-import assert from 'assert';
+import { expect } from 'chai';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
@@ -23,7 +23,7 @@ describe('Search', () => {
         </Router>
       </Provider>
     );
-    assert.equal(typeof htmlString, 'string');
+    expect(htmlString).to.be.a('string');
   });
 
   it('should be able to render after getting a response', () => {
@@ -36,14 +36,18 @@ describe('Search', () => {
         </Router>
       </Provider>
     );
-    assert.equal(typeof htmlString, 'string');
+    expect(htmlString).to.be.a('string');
   });
 });
 
 describe('SearchBreadcrumbs', () => {
   it('should be able to render to an HTML string', () => {
-    let htmlString = renderToString(<Router><SearchBreadcrumbs queryParams={{ page: 0, query: 'actin' }} total={5} /></Router>);
-    assert.equal(typeof htmlString, 'string');
+    let htmlString = renderToString(
+      <Router>
+        <SearchBreadcrumbs queryParams={{ page: 0, query: 'actin' }} total={5} />
+      </Router>
+    );
+    expect(htmlString).to.be.a('string');
   });
 });
 
@@ -60,20 +64,24 @@ describe('SearchControls', () => {
         />
       </Router>
     );
-    assert.equal(typeof htmlString, 'string');
+    expect(htmlString).to.be.a('string');
   });
 });
 
 describe('ResultsTable', () => {
   it('should be able to render to an HTML string', () => {
     let htmlString = renderToString(<ResultsTable entries={[]} />);
-    assert.equal(typeof htmlString, 'string');
+    expect(htmlString).to.be.a('string');
   });
 });
 
 describe('FilterSelector', () => {
   it('should be able to render to an HTML string', () => {
-    let htmlString = renderToString(<Router><FilterSelectorComponent aggregations={[]} /></Router>);
-    assert.equal(typeof htmlString, 'string');
+    let htmlString = renderToString(
+      <Router>
+        <FilterSelectorComponent aggregations={[]} />
+      </Router>
+    );
+    expect(htmlString).to.be.a('string');
   });
 });

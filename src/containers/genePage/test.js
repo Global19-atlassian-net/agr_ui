@@ -1,4 +1,4 @@
-import assert from 'assert';
+import { expect } from 'chai';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
@@ -15,6 +15,6 @@ describe('GenePage', () => {
         <GenePage geneId='WB:WBGene00197647' />
       </Provider>
     );
-    assert.equal(typeof htmlString, 'string');
+    expect(typeof htmlString).to.be.a('string');
   });
 });
