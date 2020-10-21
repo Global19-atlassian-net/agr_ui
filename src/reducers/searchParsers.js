@@ -197,10 +197,10 @@ function parseGoResult(_d) {
 }
 
 function parseDatasetResult(_d) {
-  let d = injectHighlightIntoResponse(_d);
-  let idCollection = ([d.id].concat(d.crossReferences));
+  _d.idCollection = ([_d.id].concat(_d.crossReferences));
   //make it unique
-  idCollection = idCollection.filter((e, i) => idCollection.indexOf(e) === i);
+  _d.idCollection = _d.idCollection.filter((e, i) => _d.idCollection.indexOf(e) === i);
+  let d = injectHighlightIntoResponse(_d);
   return {
     ...d,
     display_name: d.name,
